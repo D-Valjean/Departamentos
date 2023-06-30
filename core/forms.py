@@ -9,11 +9,14 @@ class CustomCreationForm(UserCreationForm):
     class Meta:
         model = User
         # fields = '__all__' no usar __all__ porque trae todos los permisos de super user
-        fields = ['username','first_name','last_name','email','password1','password2']
+        fields = ['username','password1','password2']
 
 
 
-class CustomTicket(forms.Form):
-    Descripcion_del_Problema = forms.CharField(widget=forms.Textarea)
-    Departamento = forms.CharField(disabled=True)
-    # Estado = forms.BooleanField(disabled=True)
+class CustomTicket(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['Descripcion_del_Problema','Departamento']
+        widgets = {
+            'Departamento':forms.HiddenInput()
+        }

@@ -5,4 +5,4 @@ from . import models
 
 @admin.register(models.Ticket)
 class ATicket(admin.ModelAdmin):
-    list_display = ('id','Descripcion_del_Problema','Departamento','Estado')
+    list_display = ('Descripcion_del_Problema','Departamento','Estado', 'id')

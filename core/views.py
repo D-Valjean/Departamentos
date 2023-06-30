@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from .forms import CustomCreationForm, CustomTicket
 from django.contrib.auth import authenticate, login
 from . import models
+from .models import Ticket
 # Create your views here.
 
 def home(request):
@@ -41,25 +42,32 @@ def register(request):
 
 @login_required
 def TicketView(request):
-    data:dict = {
-        'form': CustomTicket(initial={'Departamento': request.user.username})
-    }
-    
-    if request.method == 'POST':
-        User_ticket = CustomTicket(data=request.POST)
-
-        if User_ticket.is_valid():
-            ticket = User_ticket.save(commit=False)
-            ticket.save()
-            models.Ticket.objects.create(
-                descripcion_del_problema=User_ticket.cleaned_data['descripcion_delproblema'],departamento=User_ticket.cleaned_data['departamento']
-            )
-            # models.Ticket.objects.create(Descripcion_del_Problema=User_ticket.cleaned_data['Descripcion_del_Problema'],Departamento=User_ticket.cleaned_data['Departamento'])
-        
+    data = CustomTicket(initial={'Departamento': request.user.username})
+    if request.method=="POST":
+        data = CustomTicket(data=request.POST)
+        if data.is_valid():
+            data.save()
             return redirect('home')
+
+    return render(request,'registration/ticket.html',{'form':data})
+
+
+    # data:dict = {
+    #     'form': CustomTicket(initial={'Departamento': request.user.username})
+    # }
+    
+    # if request.method == 'POST':
+    #     User_ticket = CustomTicket(data=request.POST)
+    #     if User_ticket.is_valid():
+    #         ticket = User_ticket.save(commit=True)
+    #         ticket.save()
+    #         Ticket.objects.create(
+    #             descripcion_del_problema=request.POST['descripcion_delproblema'],departamento=request.POST['departamento'])
+    #         # models.Ticket.objects.create(Descripcion_del_Problema=User_ticket.cleaned_data['Descripcion_del_Problema'],Departamento=User_ticket.cleaned_data['Departamento'])
+    #         return redirect('home')
         
         
-    return render(request,'registration/ticket.html',data)
+    # return render(request,'registration/ticket.html',data)
 
 
 
