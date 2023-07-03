@@ -1,0 +1,30 @@
+{% extends 'cores/base.html' %}
+
+{% block content %}
+
+<h3>{{p}}</h3>
+{% if request.user.is_authenticated %}
+<Hr>
+    <div>
+        {% for obj in data %}
+        <h4>
+            <p>🚩{{obj.Descripcion_del_Problema}} - {{obj.Departamento}}</p>
+            <form method="POST" action="{% url 'pendiente' %}" >
+                {% csrf_token %}
+                <input type="hidden" name="obj_id" value="{{ obj.id }}">
+                <button type="submit" name="cambiar_Estado" class="btn btn-sm btn-primary">Cambiar Estado ✅</button>
+                <!-- <input type="submit" value="Cambiar Estado ✅" class="btn btn-sm btn-primary"> -->
+            </form>
+            <form method="POST" action="{% url 'pendiente' %}">
+                {% csrf_token %}          
+                <input type="hidden" name="obj_id" value="{{ obj.id }}"> 
+                <button type="submit" name="elimnar_ticket" class="btn btn-sm btn-primary">Eliminar 💀</button>     
+                <!-- <input type="submit" value="Eliminar" class="btn btn-sm btn-primary"> -->
+            </form> 
+        {% endfor %}
+        </h4>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+

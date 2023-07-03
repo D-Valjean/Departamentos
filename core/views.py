@@ -22,6 +22,45 @@ def exit(request):
     return redirect('home')
 
 
+
+@login_required
+def listticket(request):
+    t = models.Ticket.objects.filter(Estado=False)
+    if request.method =='POST':
+        if 'cambiar_Estado' in request.POST:
+            obj_id = request.POST['obj_id']
+            obj = models.Ticket.objects.get(id=obj_id)
+            obj.Estado = True
+            obj.save()
+        elif 'elimnar_ticket' in request.POST:
+            obj_id = request.POST['obj_id']
+            models.Ticket.objects.filter(id=obj_id).delete()
+        
+        return redirect('pendiente') 
+
+    title ='Tickets'
+    return render(request,'cores/pendientes.html',{
+        'data' : t,
+        'p':title 
+    })
+
+
+# def cambiar_Estado(request,ticket_id):
+#     obj = models.Ticket.objects.get(pk=ticket_id)
+#     obj.Estado = True
+#     obj.save()
+#     return redirect('pendiente')
+
+
+# def eleminar_ticket(request,ticket_id):
+#     obj = models.Ticket.objects.get(pk=ticket_id)
+#     obj.delete()
+
+#     return redirect('pendiente')
+
+
+
+
 def register(request):
     data = {
         'form': CustomCreationForm()
@@ -35,10 +74,9 @@ def register(request):
             user = authenticate(username= user_creation_form.cleaned_data['username'], password= user_creation_form.cleaned_data['password1'])
             login(request,user)
             return redirect('home')
-        
-        
-    return render(request,'registration/register.html',data)
 
+    if request.user.is_superuser: 
+        return render(request,'registration/register.html',data)
 
 @login_required
 def TicketView(request):
