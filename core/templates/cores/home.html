@@ -6,7 +6,7 @@
 {% if request.user.is_authenticated %}
     <Hr>
     <h4> 
-        {{ user.username | upper }}, Bienvenido
+        Bienvenido {{ user.username | upper }}  
     </h4>
 {% endif %}
 {% endblock %}
