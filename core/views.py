@@ -21,7 +21,13 @@ def exit(request):
     logout(request)
     return redirect('home')
 
+@login_required
+def listcompleted(request):
+    t = models.Ticket.objects.filter(Estado=True)
 
+    return render(request,'cores/completados.html',{
+        't':t
+    })
 
 @login_required
 def listticket(request):

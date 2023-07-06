@@ -1,0 +1,8 @@
+{% extends 'cores/base.html' %}
+
+{% block content %}
+
+{% for ticket in t %}
+<p>{{ticket.Fecha}} - {{ticket.Descripcion_del_Problema}} - {{ticket.Departamento}}</p>
+{% endfor %}
+{% endblock %}
