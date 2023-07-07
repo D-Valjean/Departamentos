@@ -5,6 +5,8 @@ from .forms import CustomCreationForm, CustomTicket
 from django.contrib.auth import authenticate, login
 from . import models
 from .models import Ticket
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 
 def home(request):
@@ -87,10 +89,17 @@ def register(request):
 @login_required
 def TicketView(request):
     data = CustomTicket(initial={'Departamento': request.user.username})
+    def enviar_correo():
+       subject = request.user.username
+       message = request.POST['Descripcion_del_Problema']
+       email_from = settings.EMAIL_HOST_USER
+       recipient_list = ['sistemas@hippocampus.com.ve']
+       send_mail(subject, message, email_from, recipient_list)
     if request.method=="POST":
         data = CustomTicket(data=request.POST)
         if data.is_valid():
             data.save()
+            enviar_correo()
             return redirect('home')
 
     return render(request,'registration/ticket.html',{'form':data})
