@@ -93,7 +93,7 @@ def TicketView(request):
        subject = request.user.username
        message = request.POST['Descripcion_del_Problema']
        email_from = settings.EMAIL_HOST_USER
-       recipient_list = ['sistemas@hippocampus.com.ve']
+       recipient_list = [''] #correo del destinatario, correo de soporte It
        send_mail(subject, message, email_from, recipient_list)
     if request.method=="POST":
         data = CustomTicket(data=request.POST)

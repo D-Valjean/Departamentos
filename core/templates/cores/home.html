@@ -5,12 +5,13 @@
 
 <h3>Inicio</h3>
 {% if request.user.is_authenticated %}
-    <Hr>
-    <h4> 
-        Bienvenido {{ user.username | upper }}  
-    </h4>
-    <div class="col-md-4" >
-        <img src="{% static 'img/logo.png' %}" alt="" width="200px" height="200px" style= "top: 10px; left: 10px;">
-    </div>
+<Hr>
+<h4>
+    Bienvenido {{ user.username | upper }}
+</h4>
+<div class="col-md-4">
+    <!-- logo de la empresa -->
+    <img src="{% static 'img/logo.jpeg' %}" alt="" width="200px" height="200px" style="top: 10px; left: 10px;">
+</div>
 {% endif %}
 {% endblock %}

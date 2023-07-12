@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8js_ygso3ii1+-bs#d8ywdp$c3blbw(87(7k^f_%focala&d^q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,8 +49,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ''#correo de donde va salir el ticket
+EMAIL_HOST_PASSWORD = '' #clave encryptada
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
